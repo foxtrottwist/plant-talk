@@ -42,8 +42,8 @@ export default function ChatWindow(props) {
   return (
     <MessageContainer>
       {messages
-        ? messages.map(msg => (
-            <MessageBubble agent={msg.agent}>
+        ? messages.map((msg, index) => (
+            <MessageBubble key={index} agent={msg.agent}>
               <div>{msg.message}</div>
             </MessageBubble>
           ))
