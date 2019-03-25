@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 const ChatWindow = styled.div`
   height: 60vh;
   width: 40vw;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem 1rem;
   overflow: auto;
   margin-bottom: 1rem;
   background-color: #fff;
@@ -18,9 +18,10 @@ const ChatWindow = styled.div`
   }
 `
 
-const Botbubble = styled.div`
+const MessageBubble = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: ${({ agent }) =>
+    agent === 'user' ? 'flex-end' : 'flex-start'};
   margin-bottom: 1rem;
 
   div {
@@ -29,23 +30,10 @@ const Botbubble = styled.div`
     border-radius: 0.5rem;
     font-size: 1.5rem;
     overflow-wrap: anywhere;
-    color: #000;
-    background-color: #bfd3d0;
-  }
-`
-const Userbubble = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-
-  div {
-    width: 55%;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 1.5rem;
-    overflow-wrap: anywhere;
-    color: #fff;
-    background-color: #6e8798;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    color: ${({ agent }) => (agent === 'user' ? '#fff' : '#000')};
+    background-color: ${({ agent }) =>
+      agent === 'user' ? '#6e8798' : '#bfd3d0'};
   }
 `
 
@@ -60,7 +48,7 @@ const Form = styled.form`
     width: 80%;
     padding: 0.5rem;
     margin-right: 1rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 900;
     border: 0.1rem solid #ff9208;
     border-radius: 3px;
@@ -87,37 +75,48 @@ const Form = styled.form`
   }
 `
 
+const conversation = [
+  { agent: 'user', message: 'Hiya!' },
+  {
+    agent: 'bot',
+    message:
+      "Howdy! I'm a chatbot! This is a really long sentence to test the over flow wrap css property.",
+  },
+  {
+    agent: 'user',
+    message:
+      'And now for something completely different. Tell me about plumeria',
+  },
+  { agent: 'bot', message: "They're weird plants." },
+]
+
 export default function ChatBox() {
-  const [value, setValue] = React.useState('')
+  const [message, setMessage] = React.useState('')
+  const [messages, setMessages] = React.useState(conversation)
 
   function handleSubmit(event) {
     event.preventDefault()
-    alert(value)
-    setValue('')
+    setMessages([...messages, { agent: 'user', message }])
+    setMessage('')
   }
 
   return (
     <section>
       <ChatWindow>
-        <Botbubble>
-          <div>
-            Howdy! I'm a chatbot! This is a really long sentence to test the
-            over flow wrap css property.
-          </div>
-        </Botbubble>
-        <Userbubble>
-          <div>Hiya!</div>
-        </Userbubble>
-        <Botbubble>
-          <div>And now for something completely different.</div>
-        </Botbubble>
+        {messages
+          ? messages.map(msg => (
+              <MessageBubble agent={msg.agent}>
+                <div>{msg.message}</div>
+              </MessageBubble>
+            ))
+          : null}
       </ChatWindow>
       <Form onSubmit={handleSubmit}>
         <div>
           <textarea
             type="text"
-            value={value}
-            onChange={event => setValue(event.target.value)}
+            value={message}
+            onChange={event => setMessage(event.target.value)}
           />
           <div>
             <button type="submit">send</button>
