@@ -15,7 +15,7 @@ const Form = styled.form`
     width: 80%;
     padding: 0.5rem;
     margin-right: 1rem;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 900;
     border: 0.1rem solid #ff9208;
     border-radius: 3px;
@@ -45,11 +45,13 @@ const Form = styled.form`
 export default function ChatInterface() {
   const [message, setMessage] = React.useState('')
   const [messages, setMessages] = React.useState(msg)
+  const textareaFocus = React.useRef(null)
 
   function handleSubmit(event) {
     event.preventDefault()
     setMessages([...messages, { agent: 'user', message }])
     setMessage('')
+    textareaFocus.current.focus()
   }
 
   return (
@@ -58,6 +60,7 @@ export default function ChatInterface() {
       <Form onSubmit={handleSubmit}>
         <div>
           <textarea
+            ref={textareaFocus}
             type="text"
             value={message}
             onChange={event => setMessage(event.target.value)}
