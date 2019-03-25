@@ -1,0 +1,12 @@
+[
+  { "agent": "user", "message": "Hiya!" },
+  {
+    "agent": "bot",
+    "message": "Howdy! I'm a chatbot! This is a really long sentence to test the over flow wrap css property."
+  },
+  {
+    "agent": "user",
+    "message": "And now for something completely different. Tell me about plumeria"
+  },
+  { "agent": "bot", "message": "They're weird plants." }
+]

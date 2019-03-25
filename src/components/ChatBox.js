@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 import ChatWindow from './ChatWindow'
+import msg from '../samples/messages' // Temporary sample data
 
 const Form = styled.form`
   & > div {
@@ -41,24 +42,9 @@ const Form = styled.form`
   }
 `
 
-const conversation = [
-  { agent: 'user', message: 'Hiya!' },
-  {
-    agent: 'bot',
-    message:
-      "Howdy! I'm a chatbot! This is a really long sentence to test the over flow wrap css property.",
-  },
-  {
-    agent: 'user',
-    message:
-      'And now for something completely different. Tell me about plumeria',
-  },
-  { agent: 'bot', message: "They're weird plants." },
-]
-
 export default function ChatInterface() {
   const [message, setMessage] = React.useState('')
-  const [messages, setMessages] = React.useState(conversation)
+  const [messages, setMessages] = React.useState(msg)
 
   function handleSubmit(event) {
     event.preventDefault()
