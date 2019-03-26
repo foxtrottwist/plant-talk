@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components/macro'
 
-import ChatInterface from './ChatBox'
+import ChatBox from './ChatBox'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -46,7 +46,7 @@ export default function App() {
         Plant Talk
       </h1>
       <Main>
-        <ChatInterface />
+        <ChatBox />
       </Main>
     </>
   )
