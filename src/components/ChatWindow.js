@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
 const MessageContainer = styled.div`
@@ -37,8 +38,7 @@ const MessageBubble = styled.div`
   }
 `
 
-export default function ChatWindow(props) {
-  const { messages } = props
+export default function ChatWindow({ messages }) {
   return (
     <MessageContainer>
       {messages.length > 0
@@ -50,4 +50,13 @@ export default function ChatWindow(props) {
         : null}
     </MessageContainer>
   )
+}
+
+ChatWindow.propTypes = {
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      agent: PropTypes.string,
+      message: PropTypes.string,
+    }),
+  ),
 }
